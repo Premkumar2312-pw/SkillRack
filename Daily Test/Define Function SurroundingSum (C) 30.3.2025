@@ -1,0 +1,32 @@
+int findSurroundingSum(int R, int C, int matrix[R][C], int xRow, int yCol)
+{
+    int i = xRow-1;
+    int j = yCol-1;
+    int sum=0;
+    if(i-1>=0 && j-1>=0){
+        sum+=matrix[i-1][j-1]+matrix[i-1][j]+matrix[i][j-1];
+    }
+    else if(i-1>=0){
+        sum+=matrix[i-1][j];
+    }
+    else if(j-1>=0){
+        sum+=matrix[i][j-1];
+    }
+    if(i-1>=0 && j+1<=C-1){
+        sum+=matrix[i-1][j+1]+matrix[i][j+1];
+    }
+    else if(j+1<=C-1){
+        sum+=matrix[i][j+1];
+    }
+    if(i+1<=R-1 && j-1>=0){
+        sum+=matrix[i+1][j-1]+matrix[i+1][j];
+    }
+    else if(i+1<=R-1){
+        sum+=matrix[i+1][j];
+    }
+    if(i+1<=R-1 && j+1<=C-1 ){
+        sum+=matrix[i+1][j+1];
+    }
+    return sum;
+    
+}
