@@ -1,0 +1,22 @@
+import java.text.DecimalFormat;
+
+class Person {
+    String name;
+    int weight;
+    double height;
+
+    Person(String n, int w, double h) {
+        name = n;
+        weight = w;
+        height = h;
+    }
+
+    double getBodyMassIndex() {
+        return weight / (height * height);
+    }
+
+    public String toString() {
+        DecimalFormat df = new DecimalFormat("0.00");
+        return "Name: " + name + "\nWeight: " + weight + " kg\nHeight: " + df.format(height) + " m";
+    }
+}
