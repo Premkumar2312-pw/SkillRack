@@ -22,6 +22,3 @@ char* getUniqueUnitDigits(int SIZE, int arr[]) {
 }
     return result;
 }
-
-
-DC
