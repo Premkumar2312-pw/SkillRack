@@ -1,18 +1,18 @@
 class Matrix:
-    def __init__(self, r, c):
-        self.r = r
-        self.c = c
-        self.data = [[0 for _ in range(c)] for _ in range(r)]
+    def __init__(self, rows, cols):
+        self.R = rows
+        self.C = cols
+        self.data = [[0 for _ in range(cols)] for _ in range(rows)]
 
-    def set(self, i, j, v):
-        self.data[i][j] = v
+    def setValue(self, row, col, value):
+        self.data[row][col] = value
 
-    def get(self, i, j):
-        return self.data[i][j]
+    def getValue(self, row, col):
+        return self.data[row][col]
 
-    def __add__(self, m):
-        res = Matrix(self.r, self.c)
-        for i in range(self.r):
-            for j in range(self.c):
-                res.set(i, j, self.get(i, j) + m.get(i, j))
-        return res
+    def __add__(self, other):
+        result = Matrix(self.R, self.C)
+        for i in range(self.R):
+            for j in range(self.C):
+                result.setValue(i, j, self.getValue(i, j) + other.getValue(i, j))
+        return result
