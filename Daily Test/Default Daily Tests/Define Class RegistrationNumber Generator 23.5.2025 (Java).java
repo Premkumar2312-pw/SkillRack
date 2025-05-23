@@ -12,6 +12,6 @@ class RegistrationNumberGenerator {
         int count = regCount.getOrDefault(key, 0) + 1;
         regCount.put(key, count);
 
-        return String.format("%d%c%03d", year, section, count);
+        return String.format("%04d%c%03d", year, section, count);
     }
 }
