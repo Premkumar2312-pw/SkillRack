@@ -1,17 +1,24 @@
-from datetime import date, timedelta
+import datetime as d, calendar as c
 
-M, N = map(int, input().split())
-Y = int(input())
-d, e = date(Y, 1, 1), date(Y, 12, 31)
-A, B, f = [], [], True
-m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-fmt = lambda x: f"{x.day:02d}-{m[x.month-1]}-{x.year}"
+m, n = map(int, input().split())
+y = int(input())
 
-while d <= e:
-    t = M if f else N
-    nd = min(d + timedelta(t - 1), e)
-    (A if f else B).append(f"{fmt(d)} to {fmt(nd)}")
-    d, f = nd + timedelta(1), not f
+dt, ed = d.date(y, 1, 1), d.date(y, 12, 31)
+a, b = [], []
+f = lambda x: f"{x.day:02d}-{c.month_abbr[x.month]}-{x.year:04d}"
+city = 'A'
 
-print("City A:\n" + "\n".join(A))
-print("City B:\n" + "\n".join(B))
+while dt <= ed:
+    s = dt
+    t = min(dt + d.timedelta(m - 1 if city == 'A' else n - 1), ed)
+    (a if city == 'A' else b).append((s, t))
+    dt = t + d.timedelta(1)  # ✅ move to next available day
+    city = 'B' if city == 'A' else 'A'
+
+print("City A:")
+for s, t in a:
+    print(f"{f(s)} to {f(t)}")
+
+print("City B:")
+for s, t in b:
+    print(f"{f(s)} to {f(t)}")
