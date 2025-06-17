@@ -1,66 +1,70 @@
 #include <stdio.h>
 #include <time.h>
 
-void add_days(struct tm *dt, int days) {
-    dt->tm_mday += days;
-    mktime(dt);
-}
-
-void print_date(struct tm dt) {
-    char* months[] = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
-    printf("%02d-%s-%d", dt.tm_mday, months[dt.tm_mon], dt.tm_year + 1900);
+void print_date_range(struct tm date) {
+    char month[12][4] = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+    printf("%02d-%s-%04d", date.tm_mday, month[date.tm_mon], date.tm_year + 1900);
 }
 
 int main() {
-    int M, N, Y;
-    scanf("%d %d", &M, &N);
-    scanf("%d", &Y);
+    int m, n, y;
+    scanf("%d %d", &m, &n);
+    scanf("%d", &y);
 
-    struct tm curr = {0}, end = {0};
-    curr.tm_year = end.tm_year = Y - 1900;
-    curr.tm_mon = end.tm_mon = 0;
-    curr.tm_mday = 1;
-    end.tm_mon = 11;
-    end.tm_mday = 31;
-    mktime(&curr);
-    mktime(&end);
+    struct tm dt = {0}, ed = {0};
+    dt.tm_year = y - 1900; dt.tm_mon = 0; dt.tm_mday = 1;
+    ed.tm_year = y - 1900; ed.tm_mon = 11; ed.tm_mday = 31;
 
-    int flag = 1;
+    time_t end_time = mktime(&ed);
+    char city = 'A';
 
     printf("City A:\n");
-    while (difftime(mktime(&curr), mktime(&end)) <= 0) {
-        struct tm next = curr;
-        add_days(&next, (flag ? M : N) - 1);
-        if (difftime(mktime(&next), mktime(&end)) > 0)
-            next = end;
+    while (mktime(&dt) <= end_time) {
+        struct tm start = dt;
+        int days = (city == 'A') ? m : n;
 
-        if (flag)
-            print_date(curr), printf(" to "), print_date(next), printf("\n");
+        dt.tm_mday += days - 1;
+        mktime(&dt);
+        if (mktime(&dt) > end_time) {
+            dt = ed;
+        }
 
-        curr = next;
-        add_days(&curr, 1);
-        flag = !flag;
+        if (city == 'A') {
+            print_date_range(start);
+            printf(" to ");
+            print_date_range(dt);
+            printf("\n");
+        }
+
+        dt.tm_mday += 1;
+        mktime(&dt);
+        city = (city == 'A') ? 'B' : 'A';
     }
 
-    curr.tm_year = Y - 1900;
-    curr.tm_mon = 0;
-    curr.tm_mday = 1;
-    mktime(&curr);
-    flag = 1;
+    dt.tm_year = y - 1900; dt.tm_mon = 0; dt.tm_mday = 1;
+    city = 'A';
 
-    printf("City B:\n");
-    while (difftime(mktime(&curr), mktime(&end)) <= 0) {
-        struct tm next = curr;
-        add_days(&next, (flag ? M : N) - 1);
-        if (difftime(mktime(&next), mktime(&end)) > 0)
-            next = end;
+    while (mktime(&dt) <= end_time) {
+        struct tm start = dt;
+        int days = (city == 'A') ? m : n;
 
-        if (!flag)
-            print_date(curr), printf(" to "), print_date(next), printf("\n");
+        dt.tm_mday += days - 1;
+        mktime(&dt);
+        if (mktime(&dt) > end_time) {
+            dt = ed;
+        }
 
-        curr = next;
-        add_days(&curr, 1);
-        flag = !flag;
+        if (city == 'B') {
+            print_date_range(start);
+            printf(" to ");
+            print_date_range(dt);
+            printf("\n");
+        }
+
+        dt.tm_mday += 1;
+        mktime(&dt);
+        city = (city == 'A') ? 'B' : 'A';
     }
+
     return 0;
 }
