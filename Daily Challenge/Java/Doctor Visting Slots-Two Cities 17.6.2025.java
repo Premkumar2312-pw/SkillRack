@@ -1,33 +1,37 @@
-import java.util.*;
-import java.time.*;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int M = sc.nextInt(), N = sc.nextInt();
-        int Y = sc.nextInt();
+        int m = sc.nextInt(), n = sc.nextInt(), y = sc.nextInt();
 
-        LocalDate d = LocalDate.of(Y, 1, 1);
-        LocalDate end = LocalDate.of(Y, 12, 31);
-        List<String> A = new ArrayList<>(), B = new ArrayList<>();
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd-MMM-yyyy", Locale.ENGLISH);
-        boolean f = true;
+        LocalDate dt = LocalDate.of(y, 1, 1);
+        LocalDate ed = LocalDate.of(y, 12, 31);
+        List<String> cityA = new ArrayList<>();
+        List<String> cityB = new ArrayList<>();
+        String city = "A";
 
-        while (!d.isAfter(end)) {
-            int t = f ? M : N;
-            LocalDate nd = d.plusDays(t - 1);
-            if (nd.isAfter(end)) nd = end;
-            String slot = d.format(fmt) + " to " + nd.format(fmt);
-            if (f) A.add(slot);
-            else B.add(slot);
-            d = nd.plusDays(1);
-            f = !f;
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd-MMM-yyyy", Locale.ENGLISH);
+
+        while (!dt.isAfter(ed)) {
+            LocalDate start = dt;
+            LocalDate end = dt.plusDays((city.equals("A") ? m : n) - 1);
+            if (end.isAfter(ed)) end = ed;
+
+            String range = f.format(start) + " to " + f.format(end);
+            if (city.equals("A")) cityA.add(range);
+            else cityB.add(range);
+
+            dt = end.plusDays(1);
+            city = city.equals("A") ? "B" : "A";
         }
 
         System.out.println("City A:");
-        A.forEach(System.out::println);
+        for (String s : cityA) System.out.println(s);
+
         System.out.println("City B:");
-        B.forEach(System.out::println);
+        for (String s : cityB) System.out.println(s);
     }
 }
