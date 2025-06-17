@@ -5,27 +5,27 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         int n = sc.nextInt();
-        int[] p = new int[n];
-        for (int i = 0; i < n; i++) p[i] = sc.nextInt();
+        int c = 0;
+        for (int i = 0; i < n; i++) {
+            c += sc.nextInt();
+        }
 
         int m = sc.nextInt();
-        int[] q = new int[m];
-        for (int i = 0; i < m; i++) q[i] = sc.nextInt();
-
-        Arrays.sort(p);
-        Arrays.sort(q);
-
-        int c = 0;
+        int[] a = new int[m];
         for (int i = 0; i < m; i++) {
-            int need = 100 - q[i];
-            for (int j = 0; j < n; j++) {
-                if (p[j] >= need) {
-                    p[j] -= need;
-                    c++;
-                    break;
-                }
-            }
+            int x = sc.nextInt();
+            a[i] = 100 - x;
         }
-        System.out.println(c);
+
+        Arrays.sort(a);
+        int count = 0;
+        for (int i = 0; i < m; i++) {
+            if (c - a[i] >= 0) {
+                c -= a[i];
+                count++;
+            } else break;
+        }
+
+        System.out.println(count);
     }
 }
