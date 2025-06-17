@@ -4,28 +4,31 @@
 using namespace std;
 
 int main() {
-    int n, m, c = 0;
+    int n, c = 0;
     cin >> n;
-    vector<int> p(n);
-    for (int i = 0; i < n; i++) cin >> p[i];
-
-    cin >> m;
-    vector<int> q(m);
-    for (int i = 0; i < m; i++) cin >> q[i];
-
-    sort(p.begin(), p.end());
-    sort(q.begin(), q.end());
-
-    for (int i = 0; i < m; i++) {
-        int need = 100 - q[i];
-        for (int j = 0; j < n; j++) {
-            if (p[j] >= need) {
-                p[j] -= need;
-                c++;
-                break;
-            }
-        }
+    for (int i = 0, x; i < n; i++) {
+        cin >> x;
+        c += x;
     }
-    cout << c << endl;
+
+    int m;
+    cin >> m;
+    vector<int> a(m);
+    for (int i = 0, x; i < m; i++) {
+        cin >> x;
+        a[i] = 100 - x;
+    }
+
+    sort(a.begin(), a.end());
+
+    int count = 0;
+    for (int i = 0; i < m; i++) {
+        if (c - a[i] >= 0) {
+            c -= a[i];
+            count++;
+        } else break;
+    }
+
+    cout << count << endl;
     return 0;
 }
