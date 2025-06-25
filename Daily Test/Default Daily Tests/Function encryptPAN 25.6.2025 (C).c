@@ -1,10 +1,10 @@
-char* encryptPAN(char *s) {
+char* encryptPAN(char *str) {
     char rev[] = "zyxwvtsrqpnmlkjhgfdcb";
     int i = 0, k = 0;
-    char *res = (char*)malloc(2 * strlen(s) + 1);
+    char *res = (char*)malloc(2 * strlen(str) + 1);
 
-    while (s[i]) {
-        char c = s[i];
+    while (str[i]) {
+        char c = str[i];
 
         if (strchr("AEIOUaeiou", c)) {
             // Skip vowel
