@@ -1,0 +1,9 @@
+n = int(input())
+a = list(map(int, input().split()))
+
+if all(x == a[0] for x in a):
+    print("Equal")
+elif all(a[i] <= a[i+1] for i in range(n - 1)):
+    print("Ascending")
+else:
+    print("Descending")
