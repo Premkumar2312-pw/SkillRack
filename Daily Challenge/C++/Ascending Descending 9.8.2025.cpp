@@ -1,18 +1,22 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 using namespace std;
 
-bool isSortedAsc(const vector<int>& v) {
-    for (size_t i = 1; i < v.size(); ++i)
-        if (v[i - 1] > v[i]) return false;
+bool is_asc(const vector<int>& v) {
+    for (int i = 1; i < v.size(); ++i)
+        if (v[i] < v[i-1]) return false;
     return true;
 }
 
-bool allEqual(const vector<int>& a, const vector<int>& b) {
-    int val = a[0];
-    for (int x : a) if (x != val) return false;
-    for (int x : b) if (x != val) return false;
+bool is_desc(const vector<int>& v) {
+    for (int i = 1; i < v.size(); ++i)
+        if (v[i] > v[i-1]) return false;
+    return true;
+}
+
+bool all_equal(const vector<int>& v) {
+    for (int i = 1; i < v.size(); ++i)
+        if (v[i] != v[0]) return false;
     return true;
 }
 
@@ -25,26 +29,22 @@ int main() {
     int m, n;
     cin >> m;
     vector<int> a(m);
-    for (int& x : a) cin >> x;
+    for (int i = 0; i < m; ++i) cin >> a[i];
+
     cin >> n;
     vector<int> b(n);
-    for (int& x : b) cin >> x;
+    for (int i = 0; i < n; ++i) cin >> b[i];
 
-    bool sa = isSortedAsc(a);
-    bool sb = isSortedAsc(b);
-
-    if (allEqual(a, b)) {
-        print(a);
-        print(b);
-    } else if (sa && !sb) {
-        print(a);
-        print(b);
-    } else if (!sa && sb) {
-        print(b);
-        print(a);
+    if (all_equal(a) && all_equal(b)) {
+        if (a[0] < b[0]) { print(a); print(b); }
+        else if (b[0] < a[0]) { print(b); print(a); }
+        else { print(a); print(b); }
+    } else if (is_asc(a) && is_desc(b)) {
+        print(a); print(b);
+    } else if (is_desc(a) && is_asc(b)) {
+        print(b); print(a);
     } else {
-        print(a);
-        print(b);
+        print(a); print(b);
     }
 
     return 0;
