@@ -2,27 +2,43 @@
 #include <string.h>
 
 int main() {
-    char s[1001], p[1001];
+    char s[1001];
     scanf("%s", s);
     int n = strlen(s);
-    for (int l = 1; l <= n / 2; l++) {
-        if (n % l != 0 && n % l != 1) continue;
-        strncpy(p, s, l);
-        p[l] = '\0';
-        int ok = 1;
-        for (int i = 0; i < n; i += l) {
-            for (int j = 0; j < l && i + j < n; j++) {
-                if (s[i + j] != p[j] && s[i + j] != '_') {
-                    ok = 0;
-                    break;
+    for (int i = 1; i <= n / 2; i++) {
+        if (n / i < 2) continue;
+        char p[101];
+        int valid = 1;
+        for (int j = 0; j < i; j++) {
+            int freq[256] = {0}, max = 0;
+            char maxc = 0;
+            for (int k = j; k < n; k += i) {
+                if (s[k] != '_') {
+                    freq[(int)s[k]]++;
+                    if (freq[(int)s[k]] > max) {
+                        max = freq[(int)s[k]];
+                        maxc = s[k];
+                    }
                 }
             }
-            if (!ok) break;
+            if (max == 0) {
+                valid = 0;
+                break;
+            }
+            p[j] = maxc;
         }
-        if (ok) {
-            for (int i = 0; i < n; i++) {
-                if (s[i] == '_') {
-                    printf("%c\n", p[i % l]);
+        if (!valid) continue;
+        int match = 1;
+        for (int j = 0; j < n; j++) {
+            if (s[j] != '_' && s[j] != p[j % i]) {
+                match = 0;
+                break;
+            }
+        }
+        if (match) {
+            for (int j = 0; j < n; j++) {
+                if (s[j] == '_') {
+                    printf("%c\n", p[j % i]);
                     return 0;
                 }
             }
