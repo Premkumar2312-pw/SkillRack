@@ -1,47 +1,49 @@
 import java.util.*;
 
 public class Main {
-    static boolean isSortedAsc(int[] arr) {
-        for (int i = 1; i < arr.length; i++)
-            if (arr[i - 1] > arr[i]) return false;
+    static boolean isAsc(List<Integer> list) {
+        for (int i = 1; i < list.size(); i++)
+            if (list.get(i) < list.get(i - 1)) return false;
         return true;
     }
 
-    static boolean allEqual(int[] a, int[] b) {
-        int val = a[0];
-        for (int x : a) if (x != val) return false;
-        for (int x : b) if (x != val) return false;
+    static boolean isDesc(List<Integer> list) {
+        for (int i = 1; i < list.size(); i++)
+            if (list.get(i) > list.get(i - 1)) return false;
         return true;
     }
 
-    static void print(int[] arr) {
-        for (int x : arr) System.out.print(x + " ");
+    static boolean allEqual(List<Integer> list) {
+        for (int i = 1; i < list.size(); i++)
+            if (!list.get(i).equals(list.get(0))) return false;
+        return true;
+    }
+
+    static void print(List<Integer> list) {
+        for (int x : list) System.out.print(x + " ");
         System.out.println();
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int m = sc.nextInt();
-        int[] a = new int[m];
-        for (int i = 0; i < m; i++) a[i] = sc.nextInt();
+        List<Integer> a = new ArrayList<>();
+        for (int i = 0; i < m; i++) a.add(sc.nextInt());
+
         int n = sc.nextInt();
-        int[] b = new int[n];
-        for (int i = 0; i < n; i++) b[i] = sc.nextInt();
+        List<Integer> b = new ArrayList<>();
+        for (int i = 0; i < n; i++) b.add(sc.nextInt());
 
-        boolean sa = isSortedAsc(a), sb = isSortedAsc(b);
-
-        if (allEqual(a, b)) {
-            print(a);
-            print(b);
-        } else if (sa && !sb) {
-            print(a);
-            print(b);
-        } else if (!sa && sb) {
-            print(b);
-            print(a);
+        if (allEqual(a) && allEqual(b)) {
+            if (a.get(0) < b.get(0)) { print(a); print(b); }
+            else if (b.get(0) < a.get(0)) { print(b); print(a); }
+            else { print(a); print(b); }
+        } else if (isAsc(a) && isDesc(b)) {
+            print(a); print(b);
+        } else if (isDesc(a) && isAsc(b)) {
+            print(b); print(a);
         } else {
-            print(a);
-            print(b);
+            print(a); print(b);
         }
     }
 }
