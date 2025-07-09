@@ -3,30 +3,46 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String s = sc.next();
+        String s = sc.next().trim();
         int n = s.length();
-        for (int l = 1; l <= n / 2; l++) {
-            if (n % l != 0 && n % l != 1) continue;
-            String p = s.substring(0, l);
-            boolean ok = true;
-            for (int i = 0; i < n; i += l) {
-                for (int j = 0; j < l && i + j < n; j++) {
-                    char ch = s.charAt(i + j);
-                    if (ch != p.charAt(j) && ch != '_') {
-                        ok = false;
-                        break;
+        for (int i = 1; i <= n / 2; i++) {
+            if (n / i < 2) continue;
+            char[] p = new char[i];
+            boolean valid = true;
+            for (int j = 0; j < i; j++) {
+                Map<Character, Integer> map = new HashMap<>();
+                for (int k = j; k < n; k += i) {
+                    char ch = s.charAt(k);
+                    if (ch != '_') map.put(ch, map.getOrDefault(ch, 0) + 1);
+                }
+                if (map.isEmpty()) {
+                    valid = false;
+                    break;
+                }
+                char maxc = 0;
+                int maxf = 0;
+                for (Map.Entry<Character, Integer> e : map.entrySet()) {
+                    if (e.getValue() > maxf) {
+                        maxf = e.getValue();
+                        maxc = e.getKey();
                     }
                 }
-                if (!ok) break;
+                p[j] = maxc;
+            }
+            if (!valid) continue;
+            boolean ok = true;
+            for (int j = 0; j < n; j++) {
+                char ch = s.charAt(j);
+                if (ch != '_' && ch != p[j % i]) {
+                    ok = false;
+                    break;
+                }
             }
             if (ok) {
-                for (int i = 0; i < n; i++) {
-                    if (s.charAt(i) == '_') {
-                        System.out.println(p.charAt(i % l));
-                        return;
-                    }
-                }
+                System.out.println(p[s.indexOf('_') % i]);
+                break;
             }
         }
+        sc.close();
     }
 }
