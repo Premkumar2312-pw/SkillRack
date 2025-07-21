@@ -1,21 +1,18 @@
 #include <stdio.h>
+#include <string.h>
 
 int main() {
-    int x, y;
-    scanf("%d%d", &x, &y);
-    int c = 0, r = 0;
-    while (x > 0 || y > 0) {
-        int a = x % 10;
-        int b = y % 10;
-        if (a + b + c >= 10) {
-            c = 1;
-            r++;
-        } else {
-            c = 0;
+    char n[20];
+    scanf("%s", n);
+    int len = strlen(n), first = 1;
+
+    for (int i = 0; i < len; i++) {
+        if (n[i] != '0') {
+            if (!first) printf("+");
+            printf("%c", n[i]);
+            for (int j = i + 1; j < len; j++) printf("0");
+            first = 0;
         }
-        x /= 10;
-        y /= 10;
     }
-    printf("%d", r);
     return 0;
 }
