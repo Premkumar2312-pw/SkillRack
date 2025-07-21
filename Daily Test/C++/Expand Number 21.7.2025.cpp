@@ -2,21 +2,18 @@
 using namespace std;
 
 int main() {
-    int x, y;
-    cin >> x >> y;
-    int c = 0, r = 0;
-    while (x || y) {
-        int a = x % 10;
-        int b = y % 10;
-        if (a + b + c >= 10) {
-            c = 1;
-            r++;
-        } else {
-            c = 0;
+    string n;
+    cin >> n;
+    int len = n.length();
+    bool first = true;
+
+    for (int i = 0; i < len; i++) {
+        if (n[i] != '0') {
+            if (!first) cout << "+";
+            cout << n[i];
+            for (int j = i + 1; j < len; j++) cout << "0";
+            first = false;
         }
-        x /= 10;
-        y /= 10;
     }
-    cout << r;
     return 0;
 }
