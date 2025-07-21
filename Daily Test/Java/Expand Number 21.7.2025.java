@@ -3,20 +3,17 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int x = sc.nextInt(), y = sc.nextInt();
-        int c = 0, r = 0;
-        while (x > 0 || y > 0) {
-            int a = x % 10;
-            int b = y % 10;
-            if (a + b + c >= 10) {
-                c = 1;
-                r++;
-            } else {
-                c = 0;
+        String n = sc.next();
+        int len = n.length();
+        boolean first = true;
+
+        for (int i = 0; i < len; i++) {
+            if (n.charAt(i) != '0') {
+                if (!first) System.out.print("+");
+                System.out.print(n.charAt(i));
+                for (int j = i + 1; j < len; j++) System.out.print("0");
+                first = false;
             }
-            x /= 10;
-            y /= 10;
         }
-        System.out.println(r);
     }
 }
