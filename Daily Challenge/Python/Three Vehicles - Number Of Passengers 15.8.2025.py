@@ -1,0 +1,1 @@
+print(*sorted(sum(c) for i in range(1,4) for c in __import__('itertools').combinations(map(int,input().split()),i)))
