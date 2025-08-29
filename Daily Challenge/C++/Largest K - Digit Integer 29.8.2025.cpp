@@ -1,18 +1,18 @@
 #include <iostream>
-#include <string>
 using namespace std;
 
 int main() {
-    string s;
-    cin >> s;
-    int w[26];
-    w[0]=0; w[1]=1;
-    for(int i=2; i<26; i++) w[i] = w[i-2]+w[i-1];
-    int sum=0;
-    for(char c : s) {
-        c = tolower(c);
-        sum += w[c-'a'];
+    string n; int k;
+    cin >> n >> k;
+    if (n.size() < k) {
+        cout << -1 << "\n";
+        return 0;
     }
-    cout << sum << "\n";
+    int max = -1;
+    for (int i = 0; i <= (int)n.size() - k; i++) {
+        int val = stoi(n.substr(i,k));
+        if (val > max) max = val;
+    }
+    cout << max << "\n";
     return 0;
 }
