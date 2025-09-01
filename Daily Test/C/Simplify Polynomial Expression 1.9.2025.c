@@ -32,7 +32,7 @@ int main() {
     int flag = 0;
     for (int i = 0; i < n; i++) {
         if (terms[i].coef == 0) continue;
-        if (terms[i].coef > 0 && flag) printf("+");
+        if (terms[i].coef > 0) printf("+");
         printf("%d%s^%d", terms[i].coef, "x", terms[i].exp);
         flag = 1;
     }
