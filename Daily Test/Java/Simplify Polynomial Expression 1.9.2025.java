@@ -28,7 +28,7 @@ public class Main {
         boolean flag = false;
         for (Term t : terms) {
             if (t.coef == 0) continue;
-            if (t.coef > 0 && flag) System.out.print("+");
+            if (t.coef > 0) System.out.print("+");
             System.out.print(t.coef + "x^" + t.exp);
             flag = true;
         }
