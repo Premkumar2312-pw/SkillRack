@@ -31,7 +31,7 @@ int main() {
     bool flag = false;
     for (auto &t : terms) {
         if (t.coef == 0) continue;
-        if (t.coef > 0 && flag) cout << "+";
+        if (t.coef > 0) cout << "+";
         cout << t.coef << "x^" << t.exp;
         flag = true;
     }
