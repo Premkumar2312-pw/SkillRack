@@ -16,7 +16,7 @@ for exp in sorted(dicti.keys(), reverse=True):
     val = dicti[exp]
     if val == 0:
         continue
-    if val > 0 and flag:
+    if val > 0:
         print("+", end="")
     print(f"{val}x^{exp}", end="")
     flag = True
