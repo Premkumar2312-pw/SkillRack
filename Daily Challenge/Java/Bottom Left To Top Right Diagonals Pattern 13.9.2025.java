@@ -1,35 +1,31 @@
 import java.util.*;
 
 public class Main {
-    static String uniqueSorted(String s) {
-        char[] arr = s.toCharArray();
-        Arrays.sort(arr);
-        StringBuilder sb = new StringBuilder();
-        char last = 0;
-        for (char c : arr) {
-            if (sb.length() == 0 || c != last) {
-                sb.append(c);
-                last = c;
-            }
-        }
-        return sb.toString();
-    }
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int N = sc.nextInt();
-        String[] val = new String[N];
-        for (int i = 0; i < N; i++) val[i] = sc.next();
+        int size = N * 2;
+        char[][] hyp = new char[size][size];
 
-        boolean flag = true;
-        for (int i = 0; i < N; i++) {
-            for (int j = i + 1; j < N; j++) {
-                if (uniqueSorted(val[i]).equals(uniqueSorted(val[j]))) {
-                    System.out.println(val[i] + " " + val[j]);
-                    flag = false;
+        for (int i = 0; i < size; i++)
+            Arrays.fill(hyp[i], '-');
+
+        for (int i = 0; i < size; i += N) {
+            for (int j = 0; j < size; j += N) {
+                int row = i + N - 1, col = j, cnt = 0;
+                while (cnt < N) {
+                    hyp[row][col] = '*';
+                    row--;
+                    col++;
+                    cnt++;
                 }
             }
         }
-        if (flag) System.out.println(-1);
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++)
+                System.out.print(hyp[i][j]);
+            System.out.println();
+        }
     }
 }
