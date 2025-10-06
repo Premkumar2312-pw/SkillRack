@@ -1,32 +1,23 @@
 import java.util.*;
 
-class NumCalc {
-    int val, calc;
-    NumCalc(int v, int c) { val = v; calc = c; }
-}
-
 public class Main {
-    static int binVal(int n) {
-        int b = 0, m = 1;
-        while (n > 0) {
-            b += (n % 2) * m;
-            m *= 10;
-            n /= 2;
-        }
-        return b;
-    }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        NumCalc[] arr = new NumCalc[n];
+        int[][] arr = new int[n][2]; // [original value, computed value]
         for (int i = 0; i < n; i++) {
             String s = sc.next();
             int val = Integer.parseInt(s), calc = 0;
-            for (char ch : s.toCharArray())
-                calc += (ch - '0') * binVal(ch - '0');
-            arr[i] = new NumCalc(val, calc);
+            for (char ch : s.toCharArray()) {
+                int digit = ch - '0';
+                String binary = Integer.toBinaryString(digit);
+                int binVal = Integer.parseInt(binary);
+                calc += digit * binVal;
+            }
+            arr[i][0] = val;
+            arr[i][1] = calc;
         }
-        Arrays.sort(arr, (a, b) -> a.calc == b.calc ? a.val - b.val : a.calc - b.calc);
-        for (NumCalc x : arr) System.out.print(x.val + " ");
+        Arrays.sort(arr, (a, b) -> a[1] == b[1] ? a[0] - b[0] : a[1] - b[1]);
+        for (int i = 0; i < n; i++) System.out.print(arr[i][0] + " ");
     }
 }
