@@ -13,6 +13,7 @@ boundedArray *getPositionDigitsSum(int SIZE, int *n)
     res->SIZE = maxLen;
     res->arr = malloc(maxLen * sizeof(int));
 
+    // Fill from MOST SIGNIFICANT POSITION FIRST
     for(int p=maxLen-1; p>=0; p--){
         int sum = 0;
         int shift = maxLen - 1 - p;
