@@ -1,38 +1,11 @@
-#include <stdio.h>
-#include <string.h>
+s = input().strip()
 
-void toBinary(int n, char bin[]) {
-    int i = 0;
-    while (n > 0) {
-        bin[i++] = (n % 2) + '0';
-        n /= 2;
-    }
-    bin[i] = '\0';
+while True:
+    count = s.count('1')
+    print(count, end='')
 
-    // reverse
-    for (int j = 0; j < i / 2; j++) {
-        char t = bin[j];
-        bin[j] = bin[i - j - 1];
-        bin[i - j - 1] = t;
-    }
-}
+    if count == 1:
+        break
 
-int main() {
-    char s[1000];
-    scanf("%s", s);
-
-    while (1) {
-        int count = 0;
-        for (int i = 0; s[i]; i++) {
-            if (s[i] == '1') count++;
-        }
-
-        printf("%d", count);
-
-        if (count == 1) break;
-
-        printf(" ");
-        toBinary(count, s);
-    }
-    return 0;
-}
+    print(" ", end='')
+    s = bin(count)[2:]
