@@ -21,4 +21,3 @@ void maximizeInteger(int m, int arr1[m], int n, int arr2[n])
         }
     }
 }
-DT
