@@ -1,32 +1,32 @@
 #include <iostream>
-#include <vector>
 #include <unordered_map>
 using namespace std;
 
 int main() {
     int n;
     cin >> n;
-    vector<pair<int,int>> cities(n);
-    unordered_map<int,int> positions;
+
+    unordered_map<int, int> att;
 
     for (int i = 0; i < n; i++) {
-        cin >> cities[i].first >> cities[i].second;
-        positions[cities[i].first] = cities[i].second;
+        int x, y;
+        cin >> x >> y;
+        att[x] = x + y;
     }
 
-    for (auto &c : cities) {
-        int x1 = c.first, y1 = c.second;
-        int target = x1 + y1;
+    bool f = false;
 
-        if (positions.count(target)) {
-            int y2 = positions[target];
-            if (target - y2 == x1) {
-                cout << "YES\n";
-                return 0;
-            }
+    for (auto &p : att) {
+        int x = p.first;
+        int tar = p.second;
+
+        if (att.count(tar) && att[tar] == x) {
+            f = true;
+            break;
         }
     }
 
-    cout << "NO\n";
+    cout << (f ? "YES" : "NO") << endl;
+
     return 0;
 }
