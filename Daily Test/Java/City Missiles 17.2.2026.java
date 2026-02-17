@@ -5,32 +5,27 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         int n = sc.nextInt();
-        List<int[]> cities = new ArrayList<>();
-        Map<Integer, Integer> positions = new HashMap<>();
+        HashMap<Integer, Integer> att = new HashMap<>();
 
         for (int i = 0; i < n; i++) {
             int x = sc.nextInt();
             int y = sc.nextInt();
-            cities.add(new int[]{x, y});
-            positions.put(x, y);
+            att.put(x, x + y);
         }
 
-        boolean found = false;
+        boolean f = false;
 
-        for (int[] c : cities) {
-            int x1 = c[0], y1 = c[1];
-            int target = x1 + y1;
+        for (int x : att.keySet()) {
+            int tar = att.get(x);
 
-            if (positions.containsKey(target)) {
-                int y2 = positions.get(target);
-                if (target - y2 == x1) {
-                    found = true;
-                    break;
-                }
+            if (att.containsKey(tar) && att.get(tar) == x) {
+                f = true;
+                break;
             }
         }
 
-        System.out.println(found ? "YES" : "NO");
+        System.out.println(f ? "YES" : "NO");
+
         sc.close();
     }
 }
